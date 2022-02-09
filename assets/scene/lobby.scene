@@ -16,9 +16,6 @@
     "_children": [
       {
         "__id__": 2
-      },
-      {
-        "__id__": 20
       }
     ],
     "_active": true,
@@ -26,7 +23,7 @@
     "_prefab": null,
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 22
+      "__id__": 20
     },
     "_id": "604927c5-760f-456c-b897-8e2b73d71ef9"
   },
@@ -655,78 +652,21 @@
     "_id": "7b326uZWxAy6YTaXEotId0"
   },
   {
-    "__type__": "cc.Node",
-    "_name": "client",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 1
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 21
-      }
-    ],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_layer": 1073741824,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "7bH0Vh5LNAT5/jpeCdT9b3"
-  },
-  {
-    "__type__": "1d5c3fImqpLEIbhtFxj5BcV",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 20
-    },
-    "_enabled": false,
-    "__prefab": null,
-    "hostname": "localhost",
-    "port": 2567,
-    "useSSL": false,
-    "_id": "f1o+PSRrFL1bkgithUAsRr"
-  },
-  {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 23
+      "__id__": 21
     },
     "shadows": {
-      "__id__": 24
+      "__id__": 22
     },
     "_skybox": {
-      "__id__": 25
+      "__id__": 23
     },
     "fog": {
-      "__id__": 26
+      "__id__": 24
     },
     "octree": {
-      "__id__": 27
+      "__id__": 25
     }
   },
   {

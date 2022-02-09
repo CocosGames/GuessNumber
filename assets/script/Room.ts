@@ -1,5 +1,6 @@
 
 import { _decorator, Component, Node, Label, Button } from 'cc';
+import {ColyseusClient} from "db://assets/script/ColyseusClient";
 const { ccclass, property } = _decorator;
 
 /**
@@ -21,29 +22,39 @@ export class Room extends Component {
     numberLabel: Label;
 
     @property({type:Label})
-    numberList: Label;
+    numberList1: Label;
+
+    @property({type:Label})
+    numberList2: Label;
 
     @property({type:Button})
     submitBtn: Button;
 
-    cpu: string = "";
-    guess: string = "";
+    @property({type:Node})
+    clientNode: Node;
 
-    h = 0;
-    b = 0;
+    guess: string = "";
+    colyseusClient: ColyseusClient;
+    count: number = 0;
 
     start () {
-        this.numberLabel.string = this.numberList.string = "";
-        let numbers = [1,2,3,4,5,6,7,8,9,0];
-        for (var i=0;i<3;i++)
-        {
-            let r = Math.floor(Math.random()*numbers.length);
-            this.cpu = this.cpu + numbers[r].toString();
-            numbers[r]= numbers[numbers.length-1];
-            numbers.pop();
-        }
-
-        console.log(this.cpu);
+        this.colyseusClient = this.clientNode.getComponent<ColyseusClient>(ColyseusClient);
+        this.numberLabel.string = this.numberList1.string = this.numberList2.string = "";
+        this.colyseusClient.node.on("onResult", () => {
+            if (this.count==0) return;
+            this.numberList1.string = this.numberList2.string = "";
+            let map:Map<string, string> = this.colyseusClient.room.state.results;
+            map.forEach((r,id,m)=>
+            {
+                if (this.colyseusClient.room.sessionId == id) {
+                    this.numberList1.string = r;
+                }
+                else
+                {
+                    this.numberList2.string = r;
+                }
+            });
+        });
     }
 
     // update (deltaTime: number) {
@@ -52,26 +63,9 @@ export class Room extends Component {
 
     onSubmit()
     {
-        for (var i=0;i<3;i++)
-        {
-            if (this.cpu.charAt(i)==this.guess.charAt(i))
-                this.h++;
-        }
+        this.count++;
+        this.colyseusClient.room.send("action", {guess : this.guess})
 
-        for (var j=0;j<3;j++)
-        {
-            for (var k=0;k<3;k++)
-            {
-                if (this.cpu.charAt(j)==this.guess.charAt(k))
-                {
-                    this.b++;
-                }
-            }
-        }
-        this.b-=this.h;
-        this.numberList.string += this.guess + "  " + this.h + "  " + this.b + "\n";
-
-        this.h = this.b = 0;
         this.guess = "";
         this.numberLabel.string = "";
         this.submitBtn.interactable = false;
@@ -84,6 +78,26 @@ export class Room extends Component {
         if (this.guess.length==3)
             this.submitBtn.interactable = true;
     }
+
+    // onResult(e, d)
+    // {
+    //     if (this.count==0) return;
+    //     let map:Map<string, string> = this.colyseusClient.room.state.results;
+    //     map.forEach((r,id,m)=>
+    //     {
+    //         if (this.colyseusClient.room.sessionId == id) {
+    //             this.numberList1.string = "";
+    //             for (let i=0;i<this.count;i++)
+    //                 this.numberList1.string += r.charAt(this.count*5)+r.charAt(this.count*5+1)+r.charAt(this.count*5+2)+"  " + r.charAt(this.count*5+3)+ + "  " + r.charAt(this.count*5+4)+ + "\n";
+    //         }
+    //         else
+    //         {
+    //             this.numberList2.string = "";
+    //             for (let i=0;i<this.count;i++)
+    //                 this.numberList2.string += "***"+"  " + r.charAt(this.count*5+3)+ + "  " + r.charAt(this.count*5+4)+ + "\n";
+    //         }
+    //     });
+    // }
 
 }
 

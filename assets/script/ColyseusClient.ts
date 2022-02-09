@@ -3,8 +3,8 @@ const { ccclass, property } = _decorator;
 
 import Colyseus from 'db://colyseus-sdk/colyseus.js';
 
-@ccclass('NetworkManager')
-export class NetworkManager extends Component {
+@ccclass('ColyseusClient')
+export class ColyseusClient extends Component {
     @property hostname = "localhost";
     @property port = 2567;
     @property useSSL = false;
@@ -30,6 +30,7 @@ export class NetworkManager extends Component {
 
             this.room.onStateChange((state) => {
                 console.log("onStateChange: ", state);
+                this.node.emit("onResult", state);
             });
 
             this.room.onLeave((code) => {
